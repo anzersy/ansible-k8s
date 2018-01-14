@@ -1,0 +1,29 @@
+- name: enable dirs
+  file: name={{ item }} state=directory
+  with_items:
+  - "{{ ca_dir }}"
+  - "{{ base_dir }}/roles/init/files"
+
+- name: copy cfssl tools
+  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  with_items:
+  - cfssl
+  - cfssl-certinfo
+  - cfssljson
+
+- name: copy ca-config.json
+  template: src=ca-config.json.j2 dest={{ ca_dir }}/ca-config.json
+
+- name: copy ca-csr.json
+  template: src=ca-csr.json.j2 dest={{ ca_dir }}/ca-csr.json
+
+- name: gen CA
+  shell: "cd {{ ca_dir }} && {{ bin_dir }}/cfssl gencert -initca ca-csr.json | {{ bin_dir }}/cfssljson -bare ca"
+
+- name: copy CA
+  copy: src={{ ca_dir }}/{{ item }} dest={{ base_dir }}/roles/init/files/{{ item }} force=no
+  with_items:
+  - ca.pem
+  - ca-key.pem
+  - ca.csr
+  - ca-config.json

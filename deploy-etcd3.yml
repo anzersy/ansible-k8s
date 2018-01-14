@@ -1,8 +1,0 @@
----
-
-- hosts: etcd-nodes
-  become: yes
-  roles:
-    - role: etcd3
-  tags:
-    - etcd

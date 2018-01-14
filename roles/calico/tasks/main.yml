@@ -1,0 +1,47 @@
+- name: enable calico dirs
+  file: name={{ item }} state=directory
+  with_items:
+  - /etc/calico/ssl
+  - /root/local/kube-system/calico
+
+- name: copy ca
+  copy: src={{ ca_dir }}/ca.pem dest=/etc/calico/ssl/ca.pem
+
+- name: copy calico-csr
+  template: src=calico-csr.json.j2 dest=/etc/calico/ssl/calico-csr.json
+
+- name: create calico certs
+  shell: "cd /etc/calico/ssl && {{ bin_dir }}/cfssl gencert \
+        -ca={{ ca_dir }}/ca.pem \
+        -ca-key={{ ca_dir }}/ca-key.pem \
+        -config={{ ca_dir }}/ca-config.json \
+        -profile=kubernetes calico-csr.json | {{ bin_dir }}/cfssljson -bare calico"
+
+- name: copy calico DaemonSet yaml
+  template: src=calico.yaml.j2 dest=/root/local/kube-system/calico/calico.yaml
+
+- name: copy calico rbac yaml
+  template: src=calico-rbac.yaml.j2 dest=/root/local/kube-system/calico/calico-rbac.yaml
+
+- name: start calico network
+  shell: "{{ bin_dir }}/kubectl create -f /root/local/kube-system/calico/ && sleep 15"
+  when: NODE_ID is defined and NODE_ID == "node1"
+  ignore_errors: true
+
+- name: rm default cni configuration file
+  file: path=/etc/cni/net.d/10-default.conf state=absent
+
+- name: delete mynet0
+  shell: "ip link del mynet0"
+  ignore_errors: true
+
+- name: copy calicoctl
+  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  with_items:
+  #- calico
+  #- calico-ipam
+  #- loopback
+  - calicoctl
+
+- name: copy calicoctl configuration file
+  template: src=calicoctl.cfg.j2 dest=/etc/calico/calicoctl.cfg

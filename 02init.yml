@@ -1,0 +1,7 @@
+
+- hosts:
+  - ansible
+  - etcd
+  - kube-cluster
+  roles:
+  - init

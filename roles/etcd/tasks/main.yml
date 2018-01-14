@@ -1,0 +1,27 @@
+- name: copy etcd tools
+  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  with_items:
+  - etcd
+  - etcdctl
+
+- name: create etcd cert dir
+  file: name=/etc/etcd/ssl state=directory
+
+- name: copy etcd-csr.json
+  template: src=etcd-csr.json.j2 dest=/etc/etcd/ssl/etcd-csr.json
+
+- name: create etcd certs
+  shell: "cd /etc/etcd/ssl && {{ bin_dir }}/cfssl gencert \
+        -ca={{ ca_dir }}/ca.pem \
+        -ca-key={{ ca_dir }}/ca-key.pem \
+        -config={{ ca_dir }}/ca-config.json \
+        -profile=kubernetes etcd-csr.json | {{ bin_dir }}/cfssljson -bare etcd"
+
+- name: create etcd work dir
+  file: name=/var/lib/etcd state=directory
+
+- name: copy systemd configuration file
+  template: src=etcd.service.j2 dest=/etc/systemd/system/etcd.service
+
+- name: start etcd
+  shell: systemctl daemon-reload && systemctl enable etcd && systemctl restart etcd

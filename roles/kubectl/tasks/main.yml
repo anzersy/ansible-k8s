@@ -1,0 +1,28 @@
+- name: copy kubectl
+  copy: src={{ base_dir }}/bin/kubectl dest={{ bin_dir }}/kubectl mode=0755
+
+- name: copy admin-csr
+  template: src=admin-csr.json.j2 dest={{ ca_dir }}/admin-csr.json
+
+- name: create admin certs
+  shell: "cd {{ ca_dir }} && {{ bin_dir }}/cfssl gencert \
+        -ca={{ ca_dir }}/ca.pem \
+        -ca-key={{ ca_dir }}/ca-key.pem \
+        -config={{ ca_dir }}/ca-config.json \
+        -profile=kubernetes admin-csr.json | {{ bin_dir }}/cfssljson -bare admin"
+
+- name: set cluster params
+  shell: "{{ bin_dir }}/kubectl config set-cluster kubernetes \
+	--certificate-authority={{ ca_dir }}/ca.pem \
+	--embed-certs=true \
+	--server={{ KUBE_APISERVER }}"
+- name: set certs params
+  shell: "{{ bin_dir }}/kubectl config set-credentials admin \
+	--client-certificate={{ ca_dir }}/admin.pem \
+	--embed-certs=true \
+	--client-key={{ ca_dir }}/admin-key.pem"
+- name: set context params
+  shell: "{{ bin_dir }}/kubectl config set-context kubernetes \
+	--cluster=kubernetes --user=admin"
+- name: set default context params
+  shell: "{{ bin_dir }}/kubectl config use-context kubernetes"

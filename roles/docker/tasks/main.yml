@@ -1,0 +1,29 @@
+- name: copy docker tools
+  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  with_items:
+  - docker-containerd
+  - docker-containerd-shim
+  - docker-runc
+  - docker
+  - docker-containerd-ctr
+  - dockerd
+  - docker-proxy
+  - docker-compose
+
+- name: enable auto completion of docker cli
+  copy: src=docker dest=/etc/bash_completion.d/docker mode=0644
+
+- name: copy daemon.json
+  template: src=daemon.json.j2 dest=/etc/docker/daemon.json
+
+- name: flush-iptables
+  shell: "iptables -F && iptables -X \
+        && iptables -F -t nat && iptables -X -t nat \
+        && iptables -F -t raw && iptables -X -t raw \
+        && iptables -F -t mangle && iptables -X -t mangle"
+
+- name: copy docker systemd configuration file
+  template: src=docker.service.j2 dest=/etc/systemd/system/docker.service
+
+- name: start docker service
+  shell: systemctl daemon-reload && systemctl enable docker && systemctl restart docker

@@ -1,0 +1,16 @@
+[Unit]
+Description=docker server
+After=network.target
+
+[Service]
+Environment="PATH=/root/local/bin:/bin:/sbin:/usr/bin:/usr/sbin"
+User=root
+ExecStart=/usr/bin/dockerd
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+
+[Install]
+WantedBy=multi-user.target

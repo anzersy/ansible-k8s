@@ -1,6 +1,43 @@
-vm1 ansible_connection=local
+# ansible node
+[ansible]
+192.168.11.137
 
-[etcd-nodes]
-E1
-E2
-E3
+# etcd nodes
+[etcd]
+192.168.11.138 NODE_NAME="etcd1" NODE_IP="192.168.11.138"
+192.168.11.139 NODE_NAME="etcd2" NODE_IP="192.168.11.139"
+192.168.11.140 NODE_NAME="etcd3" NODE_IP="192.168.11.140"
+
+# kube-master nodes
+[kube-master]
+192.168.11.138 NODE_IP="192.168.11.138"
+192.168.11.139 NODE_IP="192.168.11.139"
+192.168.11.140 NODE_IP="192.168.11.140"
+
+[kube-node]
+192.168.11.141 NODE_ID="node1" NODE_IP="192.168.11.141"
+192.168.11.142 NODE_ID="node2" NODE_IP="192.168.11.142"
+
+# kube-cluster nodes
+[kube-cluster:children]
+kube-master
+kube-node
+
+[all:vars]
+BOOTSTRAP_TOKEN="c80302226d4b810e08731702d3890f50"
+SERVICE_CIDR="10.68.0.0/16"
+CLUSTER_CIDR="172.20.0.0/16"
+NODE_PORT_RANGE="20000-40000"
+CLUSTER_KUBERNETES_SVC_IP="10.68.0.1"
+CLUSTER_DNS_SVC_IP="10.68.0.2"
+ETCD_NODES="etcd1=https://192.168.11.138:2380,etcd2=https://192.168.11.139:2380,etcd3=https://192.168.11.140:2380"
+ETCD_ENDPOINTS="https://192.168.11.138:2379,https://192.168.11.139:2379,https://192.168.11.140:2379"
+bin_dir="/usr/bin"
+ca_dir="/etc/kubernetes/ssl"
+base_dir="/root/ansible-k8s"
+KUBE_APISERVER="https://192.168.11.138:6443"
+registry_mirror="https://7bezldxe.mirror.aliyuncs.com"
+CLUSTER_DNS_DOMAIN="cluster.local."
+POD_INFRA_CONTAINER_IMAGE="anzersy/pause-amd64:3.0"
+CALICO_IPV4POOL_IPIP="always"
+IP_AUTODETECTION_METHOD="can-reach=223.5.5.5"
