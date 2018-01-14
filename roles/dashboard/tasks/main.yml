@@ -1,12 +1,24 @@
-- name: enable dns addon dirs
+- name: enable addon dirs
   file: name={{ item }} state=directory
   with_items:
-  - /root/local/addon
+  - /root/local/addons/dashboard
 
-- name: copy dns addon yaml
-  template: src=dns.yaml.j2 dest=/root/local/dns.yaml
+- name: copy ds cm yaml
+  template: src=dashboard-configmap.yaml.j2 dest=/root/local/addons/dashboard/dashboard-configmap.yaml
 
-- name: start calico network
-  shell: "{{ bin_dir }}/kubectl create -f /root/local/dns.yaml && sleep 15"
+- name: copy ds ctrl yaml
+  template: src=dashboard-controller.yaml.j2 dest=/root/local/addons/dashboard/dashboard-controller.yaml
+
+- name: copy ds rbac yaml
+  template: src=dashboard-rbac.yaml.j2 dest=/root/local/addons/dashboard/dashboard-rbac.yaml
+
+- name: copy ds secret yaml
+  template: src=dashboard-secret.yaml.j2 dest=/root/local/addons/dashboard/dashboard-secret.yaml
+
+- name: copy ds service yaml
+  template: src=dashboard-service.yaml.j2 dest=/root/local/addons/dashboard/dashboard-service.yaml
+
+- name: start dashboard
+  shell: "{{ bin_dir }}/kubectl create -f /root/local/addons/dashboard/ && sleep 15"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="k8s">
+    <serverData>
+      <paths name="k8s">
+        <serverdata>
+          <mappings>
+            <mapping deploy="ansible-k8s" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

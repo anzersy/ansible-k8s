@@ -1,12 +1,12 @@
-- name: enable dns addon dirs
+- name: enable addon dirs
   file: name={{ item }} state=directory
   with_items:
-  - /root/local/addons
+  - /root/local/addons/dns
 
 - name: copy dns addon yaml
-  template: src=dns.yaml.j2 dest=/root/local/addons/dns.yaml
+  template: src=dns.yaml.j2 dest=/root/local/addons/dns/dns.yaml
 
 - name: start dns addon
-  shell: "{{ bin_dir }}/kubectl create -f /root/local/addons/dns.yaml && sleep 15"
+  shell: "{{ bin_dir }}/kubectl create -f /root/local/addons/dns/dns.yaml && sleep 15"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
