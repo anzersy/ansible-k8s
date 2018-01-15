@@ -1,6 +1,6 @@
 # ansible-kubernetes
 
-Use ansible to install kubernetes cluster platfrom
+Use ansible to install kubernetes cluster platfrom.
 
 ![arch](./img/arch.png)
 
