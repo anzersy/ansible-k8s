@@ -2,6 +2,8 @@
 
 A role which installs and manages a clustered kubernetes on CentOS 7
 
+![arch](./images/arch.png)
+
 ## Function List
 * Kube Master: multi apiserver, scheduler cluster, controller manager cluster
 * Kube Node: kubelet, kube-proxy
@@ -13,10 +15,11 @@ A role which installs and manages a clustered kubernetes on CentOS 7
 * DNS: kubeDNS, dnsmasq
 * UI: dashboard
 * CLI: kubectl
-* Logger: *
-* Monitor: *
-* Alerter: *
+* Logger: *(to do)
+* Monitor: *(to do)
+* Alerter: *(to do)
 * CVI: *
+* Registry: Harbor(to do)
 
 ## Binary download list 
 * Kube: https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.9.md#downloads-for-v191

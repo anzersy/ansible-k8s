@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="649955ab-14dc-427b-ad6b-830e33896bb3" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/11nginx-ingress.yml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/tasks/main.yml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/configmap.yaml.j2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/default-backend.yaml.j2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/namespace.yaml.j2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/rbac.yaml.j2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/tcp-services-configmap.yaml.j2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/udp-services-configmap.yaml.j2" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/roles/nginx-ingress/templates/with-rbac.yaml.j2" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change beforePath="$PROJECT_DIR$/roles/dashboard/templates/dashboard-service.yaml.j2" afterPath="$PROJECT_DIR$/roles/dashboard/templates/dashboard-service.yaml.j2" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,11 +17,21 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="209">
-                <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="16" />
+              <first_editor relative-caret-position="76">
+                <caret line="4" column="25" lean-forward="false" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
                 <folding />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calico.yaml.j2" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/roles/calico/templates/calico.yaml.j2">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3174">
+              <caret line="183" column="38" lean-forward="true" selection-start-line="183" selection-start-column="38" selection-end-line="183" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -126,19 +125,6 @@
               <item name="ansible-k8s" type="b2602c69:ProjectViewProjectNode" />
               <item name="ansible-k8s" type="462c0819:PsiDirectoryNode" />
               <item name="roles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ansible-k8s" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ansible-k8s" type="462c0819:PsiDirectoryNode" />
-              <item name="roles" type="462c0819:PsiDirectoryNode" />
-              <item name="kube-node" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="ansible-k8s" type="b2602c69:ProjectViewProjectNode" />
-              <item name="ansible-k8s" type="462c0819:PsiDirectoryNode" />
-              <item name="roles" type="462c0819:PsiDirectoryNode" />
-              <item name="kube-node" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -270,12 +256,12 @@
       <updated>1515754126625</updated>
       <workItem from="1515754127780" duration="129000" />
       <workItem from="1515945871639" duration="7155000" />
-      <workItem from="1515983544620" duration="10250000" />
+      <workItem from="1515983544620" duration="12940000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17534000" />
+    <option name="totallyTimeSpent" value="20224000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="0" width="1886" height="1056" extended-state="0" />
@@ -684,14 +670,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/roles/calico/templates/calico.yaml.j2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="915">
-          <caret line="183" column="38" lean-forward="true" selection-start-line="183" selection-start-column="38" selection-end-line="183" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/roles/kube-node/templates/kube-proxy.service.j2">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -700,11 +678,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/roles/calico/templates/calico.yaml.j2">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3174">
+          <caret line="183" column="38" lean-forward="true" selection-start-line="183" selection-start-column="38" selection-end-line="183" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="209">
-            <caret line="11" column="16" lean-forward="false" selection-start-line="11" selection-start-column="11" selection-end-line="11" selection-end-column="16" />
+          <first_editor relative-caret-position="76">
+            <caret line="4" column="25" lean-forward="false" selection-start-line="4" selection-start-column="25" selection-end-line="4" selection-end-column="25" />
             <folding />
           </first_editor>
           <second_editor />
