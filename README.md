@@ -2,7 +2,7 @@
 
 A role which installs and manages a clustered kubernetes on CentOS 7
 
-![arch](./images/arch.png)
+![arch](./img/arch.png)
 
 ## Function List
 * Kube Master: multi apiserver, scheduler cluster, controller manager cluster
