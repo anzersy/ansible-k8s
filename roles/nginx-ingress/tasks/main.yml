@@ -3,25 +3,25 @@
   with_items:
   - /root/local/addons/nginx-ingress
 
-- name: copy cm yaml
+- name: distribute cm yaml
   template: src=configmap.yaml.j2 dest=/root/local/addons/nginx-ingress/configmap.yaml
 
-- name: copy cm yaml
+- name: distribute cm yaml
   template: src=tcp-services-configmap.yaml.j2 dest=/root/local/addons/nginx-ingress/tcp-services-configmap.yaml
 
-- name: copy cm yaml
+- name: distribute cm yaml
   template: src=udp-services-configmap.yaml.j2 dest=/root/local/addons/nginx-ingress/udp-services-configmap.yaml
 
-- name: copy ns yaml
+- name: distribute ns yaml
   template: src=namespace.yaml.j2 dest=/root/local/addons/nginx-ingress/namespace.yaml
 
-- name: copy backend yaml
+- name: distribute backend yaml
   template: src=default-backend.yaml.j2 dest=/root/local/addons/nginx-ingress/default-backend.yaml
 
-- name: copy rbac yaml
+- name: distribute rbac yaml
   template: src=rbac.yaml.j2 dest=/root/local/addons/nginx-ingress/rbac.yaml
 
-- name: copy deploy yaml
+- name: distribute deploy yaml
   template: src=with-rbac.yaml.j2 dest=/root/local/addons/nginx-ingress/with-rbac.yaml
 
 - name: start dashboard

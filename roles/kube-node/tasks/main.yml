@@ -5,7 +5,7 @@
   - /var/lib/kube-proxy
   - /etc/cni/net.d
 
-- name: copy kube node tools
+- name: distribute kube node binaries
   copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - kubelet
@@ -14,7 +14,7 @@
   - host-local
   - loopback
 
-- name: bind system:node-bootstrapper to kubelet-bootstrap
+- name: create clusterrolebinding to bind user kubelet-bootstrap to system:node-bootstrapper
   shell: "sleep 15 && {{ bin_dir }}/kubectl create clusterrolebinding kubelet-bootstrap \
         --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap"
   when: NODE_ID is defined and NODE_ID == "node1"
@@ -41,23 +41,23 @@
 - name: move bootstrap.kubeconfig to proper path
   shell: "mv $HOME/bootstrap.kubeconfig /etc/kubernetes/bootstrap.kubeconfig"
 
-- name: copy default cni configuration
+- name: distribute default cni configuration
   template: src=cni-default.conf.j2 dest=/etc/cni/net.d/10-default.conf
 
-- name: copy kubelet systemd configuration file
+- name: distribute kubelet service configuration file
   template: src=kubelet.service.j2 dest=/etc/systemd/system/kubelet.service
   tags: kubelet
 
-- name: start
+- name: daemon-reload, enable and start kubelet service
   shell: systemctl daemon-reload && systemctl enable kubelet && systemctl restart kubelet
   tags: kubelet
 
-- name: approve-kubelet-csr
+- name: approve kubelet's csr
   shell: "sleep 15 && {{ bin_dir }}/kubectl get csr|grep 'Pending' | awk 'NR>0{print $1}'| xargs {{ bin_dir }}/kubectl certificate approve"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
 
-- name: copy kube-proxy csr
+- name: distribute kube-proxy csr
   template: src=kube-proxy-csr.json.j2 dest={{ ca_dir }}/kube-proxy-csr.json
 
 - name: create kube-proxy certs
@@ -90,11 +90,11 @@
 - name: move kube-proxy.kubeconfig to proper path
   shell: "mv $HOME/kube-proxy.kubeconfig /etc/kubernetes/kube-proxy.kubeconfig"
 
-- name: copy kube-proxy systems configuration file
+- name: distribute kube-proxy service configuration file
   tags: reload-kube-proxy
   template: src=kube-proxy.service.j2 dest=/etc/systemd/system/kube-proxy.service
 
-- name: start kube-proxy
+- name: daemon-reload, enable and start kube-proxy
   tags: reload-kube-proxy
   shell: systemctl daemon-reload && systemctl enable kube-proxy && systemctl restart kube-proxy
 

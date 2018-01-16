@@ -1,4 +1,4 @@
-- name: copy kube-master tools
+- name: distribute kube-master binaries
   copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - kube-apiserver
@@ -8,7 +8,7 @@
   - kube-proxy
   - kubelet
 
-- name: copy kubernetes csr
+- name: distribute kubernetes csr
   template: src=kubernetes-csr.json.j2 dest={{ ca_dir }}/kubernetes-csr.json
 
 - name: create kubernetes certs
@@ -18,35 +18,35 @@
         -config={{ ca_dir }}/ca-config.json \
         -profile=kubernetes kubernetes-csr.json | {{ bin_dir }}/cfssljson -bare kubernetes"
 
-- name: copy token.csv
+- name: distribute token.csv
   template: src=token.csv.j2 dest={{ ca_dir }}/token.csv
 
-- name: copy kube-apiserver systemd configuration file
+- name: distribute kube-apiserver service configuration file
   template: src=kube-apiserver.service.j2 dest=/etc/systemd/system/kube-apiserver.service
 
-- name: copy kube-apiserver systemd configuration file
+- name: distribute kube-apiserver service configuration file
   template: src=kube-controller-manager.service.j2 dest=/etc/systemd/system/kube-controller-manager.service
 
-- name: copy kube-apiserver systemd configuration file
+- name: distribute kube-apiserver service configuration file
   template: src=kube-scheduler.service.j2 dest=/etc/systemd/system/kube-scheduler.service
 
 - name: daemon-reload
   shell: systemctl daemon-reload
 
-- name: enable-kube-apiserver
+- name: enable kube-apiserver service
   shell: systemctl enable kube-apiserver
 
-- name: enable-kube-controller-manager
+- name: enable kube-controller-manager service
   shell: systemctl enable kube-controller-manager
 
-- name: enable-kube-scheduler
+- name: enable kube-scheduler service
   shell: systemctl enable kube-scheduler
 
-- name: start-kube-apiserver
+- name: start kube-apiserver service
   shell: systemctl restart kube-apiserver
 
-- name: start-kube-controller-manager
+- name: start kube-controller-manager service
   shell: systemctl restart kube-controller-manager
 
-- name: start-kube-scheduler
+- name: start kube-scheduler service
   shell: systemctl restart kube-scheduler

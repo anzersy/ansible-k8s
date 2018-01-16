@@ -3,19 +3,19 @@
   with_items:
   - /root/local/addons/dashboard
 
-- name: copy ds cm yaml
+- name: distribute ds cm yaml
   template: src=dashboard-configmap.yaml.j2 dest=/root/local/addons/dashboard/dashboard-configmap.yaml
 
-- name: copy ds ctrl yaml
+- name: distribute ds ctrl yaml
   template: src=dashboard-controller.yaml.j2 dest=/root/local/addons/dashboard/dashboard-controller.yaml
 
-- name: copy ds rbac yaml
+- name: distribute ds rbac yaml
   template: src=dashboard-rbac.yaml.j2 dest=/root/local/addons/dashboard/dashboard-rbac.yaml
 
-- name: copy ds secret yaml
+- name: distribute ds secret yaml
   template: src=dashboard-secret.yaml.j2 dest=/root/local/addons/dashboard/dashboard-secret.yaml
 
-- name: copy ds service yaml
+- name: distribute ds service yaml
   template: src=dashboard-service.yaml.j2 dest=/root/local/addons/dashboard/dashboard-service.yaml
 
 - name: start dashboard

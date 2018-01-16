@@ -17,10 +17,10 @@
 - name: copy ca-csr.json
   template: src=ca-csr.json.j2 dest={{ ca_dir }}/ca-csr.json
 
-- name: gen CA
+- name: generate CA certs
   shell: "cd {{ ca_dir }} && {{ bin_dir }}/cfssl gencert -initca ca-csr.json | {{ bin_dir }}/cfssljson -bare ca"
 
-- name: copy CA
+- name: copy CA from {{ ca_dir }} to {{ base_dir }}/roles/init/files
   copy: src={{ ca_dir }}/{{ item }} dest={{ base_dir }}/roles/init/files/{{ item }} force=no
   with_items:
   - ca.pem

@@ -3,7 +3,7 @@
   with_items:
   - /root/local/addons/dns
 
-- name: copy dns addon yaml
+- name: distribute dns addon yaml
   template: src=dns.yaml.j2 dest=/root/local/addons/dns/dns.yaml
 
 - name: start dns addon

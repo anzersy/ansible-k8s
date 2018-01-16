@@ -53,6 +53,7 @@ Use ansible to install kubernetes cluster platfrom.
 * ibmcom/k8s-dns-sidecar:1.14.1
 * quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.9.0
 * k8scn/kubernetes-dashboard-amd64:v1.8.0
+* anzersy/pause-amd64:3.0
 
 ## Helpful links
 * https://cfssl.org/

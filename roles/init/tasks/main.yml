@@ -1,18 +1,18 @@
-- name: enable dirs
+- name: enable common dirs
   file: name={{ item }} state=directory
   with_items:
   - "{{ ca_dir }}"
   - /root/.kube
   - /etc/docker
 
-- name: copy cfssl tools
+- name: distribute cfssl tools
   copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
   with_items:
   - cfssl
   - cfssl-certinfo
   - cfssljson
 
-- name: copy CA
+- name: distribute CA certs
   copy: src={{ item }} dest={{ ca_dir }}/{{ item }} mode=0644
   with_items:
   - ca.pem
@@ -20,7 +20,7 @@
   - ca.csr
   - ca-config.json
 
-- name: remove firewall
+- name: disable firewall service
   when: ansible_distribution == "CentOS"
   yum: name={{ item }} state=absent
   with_items:
@@ -28,15 +28,15 @@
   - firewalld-filesystem
   - python-firewall
 
-- name: disable selinux
+- name: disable selinux service
   shell: "setenforce 0 && echo SELINUX=disabled > /etc/selinux/config"
   when: ansible_distribution == "CentOS"
   ignore_errors: true
 
-- name: load br_netfilter
+- name: load br_netfilter module
   modprobe: name=br_netfilter state=present
 
-- name: copy sysctl configuration
+- name: distribute sysctl configuration
   copy: src=k8s-sysctl.conf dest=/etc/sysctl.d/k8s-sysctl.conf
 
 - name: enable sysctl configuration

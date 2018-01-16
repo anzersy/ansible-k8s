@@ -14,6 +14,7 @@
 192.168.11.139 NODE_IP="192.168.11.139"
 192.168.11.140 NODE_IP="192.168.11.140"
 
+#kube-node nodes
 [kube-node]
 192.168.11.141 NODE_ID="node1" NODE_IP="192.168.11.141"
 192.168.11.142 NODE_ID="node2" NODE_IP="192.168.11.142"
@@ -24,20 +25,48 @@ kube-master
 kube-node
 
 [all:vars]
+#Identify the BOOTSTRAP_TOKEN variable which would be used to help the kubelets to get the certs from apiserver
+#while kubelets talk to apiserver at the first time
 BOOTSTRAP_TOKEN="c80302226d4b810e08731702d3890f50"
+
+#Identify the SERVICE_CIDR variable which would be used to setup the iptables rules for kube services by kube-proxy
 SERVICE_CIDR="10.68.0.0/16"
+
+#Identify the CLUSTER_CIDR variable which would be used to help the apiserver generate and distribute the ip information to CNI while CNI setup the
+#pods' network
 CLUSTER_CIDR="172.20.0.0/16"
+
+#Identify the NODE_PORT_RANGE variable which would be used to set the node port of kube service
 NODE_PORT_RANGE="20000-40000"
+
+#Identify the CLUSTER_KUBERNETES_SVC_IP and CLUSTER_DNS_SVC_IP variables, CLUSTER_KUBERNETES_SVC_IP would be used in apiserver csr
+#and CLUSTER_DNS_SVC_IP would be distributed to dns service in kube cluster.
 CLUSTER_KUBERNETES_SVC_IP="10.68.0.1"
 CLUSTER_DNS_SVC_IP="10.68.0.2"
+
+#Identify the ETCD_NODES and ETCD_ENDPOINTS variables that would be set to etcd server and clients' configuration
 ETCD_NODES="etcd1=https://192.168.11.138:2380,etcd2=https://192.168.11.139:2380,etcd3=https://192.168.11.140:2380"
 ETCD_ENDPOINTS="https://192.168.11.138:2379,https://192.168.11.139:2379,https://192.168.11.140:2379"
+
+#Identify the KUBE_APISERVER varible
+KUBE_APISERVER="https://192.168.11.138:6443"
+
+#Identify the CLUSTER_DNS_DOMAIN variable
+CLUSTER_DNS_DOMAIN="cluster.local."
+
+#Identify the POD_INFRA_CONTAINER_IMAGE variable
+POD_INFRA_CONTAINER_IMAGE="anzersy/pause-amd64:3.0"
+
+#Identify the CALICO_IPV4POOL_IPIP varible
+CALICO_IPV4POOL_IPIP="always"
+
+#Identify the IP_AUTODETECTION_METHOD variable
+IP_AUTODETECTION_METHOD="can-reach=223.5.5.5"
+
+#Identify the some dirs variables
 bin_dir="/usr/bin"
 ca_dir="/etc/kubernetes/ssl"
 base_dir="/root/ansible-k8s"
-KUBE_APISERVER="https://192.168.11.138:6443"
+
+#Identify the docker daemon's configuration items
 registry_mirror="https://7bezldxe.mirror.aliyuncs.com"
-CLUSTER_DNS_DOMAIN="cluster.local."
-POD_INFRA_CONTAINER_IMAGE="anzersy/pause-amd64:3.0"
-CALICO_IPV4POOL_IPIP="always"
-IP_AUTODETECTION_METHOD="can-reach=223.5.5.5"
