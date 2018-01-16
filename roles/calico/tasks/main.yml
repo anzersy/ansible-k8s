@@ -5,17 +5,17 @@
   - /root/local/kube-system/calico
 
 - name: mv CA cert to proper path
-  copy: src={{ ca_dir }}/ca.pem dest=/etc/calico/ssl/ca.pem
+  copy: src={{ CA_DIR }}/ca.pem dest=/etc/calico/ssl/ca.pem
 
 - name: distribute calico-csr
   template: src=calico-csr.json.j2 dest=/etc/calico/ssl/calico-csr.json
 
 - name: create calico certs
-  shell: "cd /etc/calico/ssl && {{ bin_dir }}/cfssl gencert \
-        -ca={{ ca_dir }}/ca.pem \
-        -ca-key={{ ca_dir }}/ca-key.pem \
-        -config={{ ca_dir }}/ca-config.json \
-        -profile=kubernetes calico-csr.json | {{ bin_dir }}/cfssljson -bare calico"
+  shell: "cd /etc/calico/ssl && {{ BIN_DIR }}/cfssl gencert \
+        -ca={{ CA_DIR }}/ca.pem \
+        -ca-key={{ CA_DIR }}/ca-key.pem \
+        -config={{ CA_DIR }}/ca-config.json \
+        -profile=kubernetes calico-csr.json | {{ BIN_DIR }}/cfssljson -bare calico"
 
 - name: distribute calico DaemonSet yaml
   template: src=calico.yaml.j2 dest=/root/local/kube-system/calico/calico.yaml
@@ -24,7 +24,7 @@
   template: src=calico-rbac.yaml.j2 dest=/root/local/kube-system/calico/calico-rbac.yaml
 
 - name: start calico network
-  shell: "{{ bin_dir }}/kubectl create -f /root/local/kube-system/calico/ && sleep 15"
+  shell: "{{ BIN_DIR }}/kubectl create -f /root/local/kube-system/calico/ && sleep 15"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
 
@@ -36,7 +36,7 @@
   ignore_errors: true
 
 - name: distribute calicoctl binary
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ BASE_DIR }}/bin/{{ item }} dest={{ BIN_DIR }}/{{ item }} mode=0755
   with_items:
   #- calico
   #- calico-ipam

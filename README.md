@@ -7,7 +7,7 @@ Use ansible to install kubernetes cluster platfrom.
 ## Setup
 * Setup ansible(2.4+ advised) and ssh configuration.
 * Update inventories to meet your requirement of deployment regarding to various ENV.
-* Generate CA key and cert: ```ansible-playbook -i */hosts 01gen_ca.yml.```
+* Generate CA key and cert: ```ansible-playbook -i */hosts 01ca.yml.```
 * Initialize hosts(cfssl, CA certs, firewalld, selinux, sysctl): ``` ansible-playbook -i */hosts 02init.yml```.
 * Setup etcd cluster: ```ansible-playbook -i */hosts 03etcd.yml```.
 * Setup kube-master cluster: ```ansible-playbook -i */hosts 04kube-master.yml```.

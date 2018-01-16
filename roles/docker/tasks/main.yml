@@ -1,5 +1,5 @@
 - name: copy docker tools
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ BASE_DIR }}/bin/{{ item }} dest={{ BIN_DIR }}/{{ item }} mode=0755
   with_items:
   - docker-containerd
   - docker-containerd-shim

@@ -8,14 +8,14 @@ Documentation=https://github.com/coreos
 [Service]
 Type=notify
 WorkingDirectory=/var/lib/etcd/
-ExecStart={{ bin_dir }}/etcd \
+ExecStart={{ BIN_DIR }}/etcd \
   --name={{ NODE_NAME }} \
   --cert-file=/etc/etcd/ssl/etcd.pem \
   --key-file=/etc/etcd/ssl/etcd-key.pem \
   --peer-cert-file=/etc/etcd/ssl/etcd.pem \
   --peer-key-file=/etc/etcd/ssl/etcd-key.pem \
-  --trusted-ca-file={{ ca_dir }}/ca.pem \
-  --peer-trusted-ca-file={{ ca_dir }}/ca.pem \
+  --trusted-ca-file={{ CA_DIR }}/ca.pem \
+  --peer-trusted-ca-file={{ CA_DIR }}/ca.pem \
   --initial-advertise-peer-urls=https://{{ NODE_IP }}:2380 \
   --listen-peer-urls=https://{{ NODE_IP }}:2380 \
   --listen-client-urls=https://{{ NODE_IP }}:2379,http://127.0.0.1:2379 \

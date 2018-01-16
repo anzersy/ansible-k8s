@@ -1,5 +1,5 @@
 - name: distribute kube-master binaries
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ BASE_DIR }}/bin/{{ item }} dest={{ BIN_DIR }}/{{ item }} mode=0755
   with_items:
   - kube-apiserver
   - kube-controller-manager
@@ -9,17 +9,17 @@
   - kubelet
 
 - name: distribute kubernetes csr
-  template: src=kubernetes-csr.json.j2 dest={{ ca_dir }}/kubernetes-csr.json
+  template: src=kubernetes-csr.json.j2 dest={{ CA_DIR }}/kubernetes-csr.json
 
 - name: create kubernetes certs
-  shell: "cd {{ ca_dir }} && {{ bin_dir }}/cfssl gencert \
-        -ca={{ ca_dir }}/ca.pem \
-        -ca-key={{ ca_dir }}/ca-key.pem \
-        -config={{ ca_dir }}/ca-config.json \
-        -profile=kubernetes kubernetes-csr.json | {{ bin_dir }}/cfssljson -bare kubernetes"
+  shell: "cd {{ CA_DIR }} && {{ BIN_DIR }}/cfssl gencert \
+        -ca={{ CA_DIR }}/ca.pem \
+        -ca-key={{ CA_DIR }}/ca-key.pem \
+        -config={{ CA_DIR }}/ca-config.json \
+        -profile=kubernetes kubernetes-csr.json | {{ BIN_DIR }}/cfssljson -bare kubernetes"
 
 - name: distribute token.csv
-  template: src=token.csv.j2 dest={{ ca_dir }}/token.csv
+  template: src=token.csv.j2 dest={{ CA_DIR }}/token.csv
 
 - name: distribute kube-apiserver service configuration file
   template: src=kube-apiserver.service.j2 dest=/etc/systemd/system/kube-apiserver.service

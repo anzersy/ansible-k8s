@@ -1,5 +1,5 @@
 - name: distribute etcd binaries
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ BASE_DIR }}/bin/{{ item }} dest={{ BIN_DIR }}/{{ item }} mode=0755
   with_items:
   - etcd
   - etcdctl
@@ -11,11 +11,11 @@
   template: src=etcd-csr.json.j2 dest=/etc/etcd/ssl/etcd-csr.json
 
 - name: generate etcd certs
-  shell: "cd /etc/etcd/ssl && {{ bin_dir }}/cfssl gencert \
-        -ca={{ ca_dir }}/ca.pem \
-        -ca-key={{ ca_dir }}/ca-key.pem \
-        -config={{ ca_dir }}/ca-config.json \
-        -profile=kubernetes etcd-csr.json | {{ bin_dir }}/cfssljson -bare etcd"
+  shell: "cd /etc/etcd/ssl && {{ BIN_DIR }}/cfssl gencert \
+        -ca={{ CA_DIR }}/ca.pem \
+        -ca-key={{ CA_DIR }}/ca-key.pem \
+        -config={{ CA_DIR }}/ca-config.json \
+        -profile=kubernetes etcd-csr.json | {{ BIN_DIR }}/cfssljson -bare etcd"
 
 - name: create etcd work dir
   file: name=/var/lib/etcd state=directory

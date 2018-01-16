@@ -25,6 +25,6 @@
   template: src=with-rbac.yaml.j2 dest=/root/local/addons/nginx-ingress/with-rbac.yaml
 
 - name: start dashboard
-  shell: "{{ bin_dir }}/kubectl create -f /root/local/addons/nginx-ingress/ && sleep 15"
+  shell: "{{ BIN_DIR }}/kubectl create -f /root/local/addons/nginx-ingress/ && sleep 15"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true

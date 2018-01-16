@@ -1,19 +1,19 @@
 - name: enable common dirs
   file: name={{ item }} state=directory
   with_items:
-  - "{{ ca_dir }}"
+  - "{{ CA_DIR }}"
   - /root/.kube
   - /etc/docker
 
 - name: distribute cfssl tools
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ BASE_DIR }}/bin/{{ item }} dest={{ BIN_DIR }}/{{ item }} mode=0755
   with_items:
   - cfssl
   - cfssl-certinfo
   - cfssljson
 
 - name: distribute CA certs
-  copy: src={{ item }} dest={{ ca_dir }}/{{ item }} mode=0644
+  copy: src={{ item }} dest={{ CA_DIR }}/{{ item }} mode=0644
   with_items:
   - ca.pem
   - ca-key.pem

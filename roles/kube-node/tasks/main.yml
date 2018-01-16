@@ -6,7 +6,7 @@
   - /etc/cni/net.d
 
 - name: distribute kube node binaries
-  copy: src={{ base_dir }}/bin/{{ item }} dest={{ bin_dir }}/{{ item }} mode=0755
+  copy: src={{ BASE_DIR }}/bin/{{ item }} dest={{ BIN_DIR }}/{{ item }} mode=0755
   with_items:
   - kubelet
   - kube-proxy
@@ -15,28 +15,28 @@
   - loopback
 
 - name: create clusterrolebinding to bind user kubelet-bootstrap to system:node-bootstrapper
-  shell: "sleep 15 && {{ bin_dir }}/kubectl create clusterrolebinding kubelet-bootstrap \
+  shell: "sleep 15 && {{ BIN_DIR }}/kubectl create clusterrolebinding kubelet-bootstrap \
         --clusterrole=system:node-bootstrapper --user=kubelet-bootstrap"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
 
 - name: set cluster params
-  shell: "{{ bin_dir }}/kubectl config set-cluster kubernetes \
-        --certificate-authority={{ ca_dir }}/ca.pem \
+  shell: "{{ BIN_DIR }}/kubectl config set-cluster kubernetes \
+        --certificate-authority={{ CA_DIR }}/ca.pem \
         --embed-certs=true \
         --server={{ KUBE_APISERVER }} \
         --kubeconfig=bootstrap.kubeconfig"
 - name: set certs params
-  shell: "{{ bin_dir }}/kubectl config set-credentials kubelet-bootstrap \
+  shell: "{{ BIN_DIR }}/kubectl config set-credentials kubelet-bootstrap \
         --token={{ BOOTSTRAP_TOKEN }} \
         --kubeconfig=bootstrap.kubeconfig"
 - name: set context params
-  shell: "{{ bin_dir }}/kubectl config set-context default \
+  shell: "{{ BIN_DIR }}/kubectl config set-context default \
 	--cluster=kubernetes \
 	--user=kubelet-bootstrap \
 	--kubeconfig=bootstrap.kubeconfig"
 - name: set default context params
-  shell: "{{ bin_dir }}/kubectl config use-context default --kubeconfig=bootstrap.kubeconfig"
+  shell: "{{ BIN_DIR }}/kubectl config use-context default --kubeconfig=bootstrap.kubeconfig"
 
 - name: move bootstrap.kubeconfig to proper path
   shell: "mv $HOME/bootstrap.kubeconfig /etc/kubernetes/bootstrap.kubeconfig"
@@ -53,39 +53,39 @@
   tags: kubelet
 
 - name: approve kubelet's csr
-  shell: "sleep 15 && {{ bin_dir }}/kubectl get csr|grep 'Pending' | awk 'NR>0{print $1}'| xargs {{ bin_dir }}/kubectl certificate approve"
+  shell: "sleep 15 && {{ BIN_DIR }}/kubectl get csr|grep 'Pending' | awk 'NR>0{print $1}'| xargs {{ BIN_DIR }}/kubectl certificate approve"
   when: NODE_ID is defined and NODE_ID == "node1"
   ignore_errors: true
 
 - name: distribute kube-proxy csr
-  template: src=kube-proxy-csr.json.j2 dest={{ ca_dir }}/kube-proxy-csr.json
+  template: src=kube-proxy-csr.json.j2 dest={{ CA_DIR }}/kube-proxy-csr.json
 
 - name: create kube-proxy certs
-  shell: "cd {{ ca_dir }} && {{ bin_dir }}/cfssl gencert \
-        -ca={{ ca_dir }}/ca.pem \
-        -ca-key={{ ca_dir }}/ca-key.pem \
-        -config={{ ca_dir }}/ca-config.json \
-        -profile=kubernetes kube-proxy-csr.json | {{ bin_dir }}/cfssljson -bare kube-proxy"
+  shell: "cd {{ CA_DIR }} && {{ BIN_DIR }}/cfssl gencert \
+        -ca={{ CA_DIR }}/ca.pem \
+        -ca-key={{ CA_DIR }}/ca-key.pem \
+        -config={{ CA_DIR }}/ca-config.json \
+        -profile=kubernetes kube-proxy-csr.json | {{ BIN_DIR }}/cfssljson -bare kube-proxy"
 
 - name: set cluster params
-  shell: "{{ bin_dir }}/kubectl config set-cluster kubernetes \
-        --certificate-authority={{ ca_dir }}/ca.pem \
+  shell: "{{ BIN_DIR }}/kubectl config set-cluster kubernetes \
+        --certificate-authority={{ CA_DIR }}/ca.pem \
         --embed-certs=true \
         --server={{ KUBE_APISERVER }} \
         --kubeconfig=kube-proxy.kubeconfig"
 - name: set certs params
-  shell: "{{ bin_dir }}/kubectl config set-credentials kube-proxy \
-	--client-certificate={{ ca_dir }}/kube-proxy.pem \
-	--client-key={{ ca_dir }}/kube-proxy-key.pem \
+  shell: "{{ BIN_DIR }}/kubectl config set-credentials kube-proxy \
+	--client-certificate={{ CA_DIR }}/kube-proxy.pem \
+	--client-key={{ CA_DIR }}/kube-proxy-key.pem \
         --embed-certs=true \
         --kubeconfig=kube-proxy.kubeconfig"
 - name: set context params
-  shell: "{{ bin_dir }}/kubectl config set-context default \
+  shell: "{{ BIN_DIR }}/kubectl config set-context default \
         --cluster=kubernetes \
         --user=kube-proxy \
         --kubeconfig=kube-proxy.kubeconfig"
 - name: set default context params
-  shell: "{{ bin_dir }}/kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig"
+  shell: "{{ BIN_DIR }}/kubectl config use-context default --kubeconfig=kube-proxy.kubeconfig"
 
 - name: move kube-proxy.kubeconfig to proper path
   shell: "mv $HOME/kube-proxy.kubeconfig /etc/kubernetes/kube-proxy.kubeconfig"
