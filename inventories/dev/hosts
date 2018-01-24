@@ -16,9 +16,9 @@
 
 #kube-node nodes
 [kube-node]
-10.16.147.107 NODE_ID="node4" NODE_IP="10.16.147.107"
-10.16.147.108 NODE_ID="node5" NODE_IP="10.16.147.108"
-10.16.147.110 NODE_ID="node7" NODE_IP="10.16.147.110"
+10.16.147.107 NODE_ID="node1" NODE_IP="10.16.147.107"
+10.16.147.108 NODE_ID="node2" NODE_IP="10.16.147.108"
+10.16.147.109 NODE_ID="node3" NODE_IP="10.16.147.109"
 
 # kube-cluster nodes
 [kube-cluster:children]
@@ -70,4 +70,4 @@ CA_DIR="/etc/kubernetes/ssl"
 BASE_DIR="/root/ansible-k8s"
 
 # Identify the docker daemon's configuration items
-insecure_registries="2.3.255.240:80"
+insecure_registries="10.16.147.110"
