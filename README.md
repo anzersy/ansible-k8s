@@ -43,6 +43,7 @@ Use ansible to install kubernetes cluster platfrom.
 * CNI: https://github.com/containernetworking/cni/releases
 * CFSSL: https://pkg.cfssl.org/
 * ETCD: https://github.com/coreos/etcd/releases
+* Docker Compose: https://github.com/docker/compose/releases/download/1.18.0/docker-compose-Linux-x86_64
 
 ## Images list
 * calico/node:v2.6.5

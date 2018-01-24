@@ -1,6 +1,6 @@
 # ansible node
 [ansible]
-192.168.14.128
+192.168.14.129
 
 # etcd nodes
 [etcd]
@@ -70,4 +70,4 @@ CA_DIR="/etc/kubernetes/ssl"
 BASE_DIR="/root/ansible-k8s"
 
 # Identify the docker daemon's configuration items
-insecure-registries="2.3.255.240:80"
+insecure_registries="2.3.255.240:80"
