@@ -46,20 +46,20 @@ Use ansible to install kubernetes cluster platfrom.
 * Docker Compose: https://github.com/docker/compose/releases
 
 ## Images list
-#calico network images
+### calico network images
 * calico/node:v2.6.5
 * calico/cni:v1.11.2
 * calico/kube-controllers:v1.0.2
-#dns addon images
+### dns addon images
 * ibmcom/k8s-dns-kube-dns:1.14.1
 * ibmcom/k8s-dns-dnsmasq-nanny:1.14.1
 * ibmcom/k8s-dns-sidecar:1.14.1
-#nginx ingress addon images
+### nginx ingress addon images
 * ibmcom/defaultbackend:1.2
 * ibmcom/nginx-ingress-controller:0.9.0
-#dashboard addon images
+### dashboard addon images
 * k8scn/kubernetes-dashboard-amd64:v1.8.0
-#pod image
+### pod image
 * anzersy/pause-amd64:3.0
 
 ## Helpful links
