@@ -42,6 +42,7 @@ Use ansible to install kubernetes cluster platfrom.
 * Calicoctl: https://github.com/projectcalico/calicoctl/releases
 * CNI: https://github.com/containernetworking/cni/releases
 * CFSSL: https://pkg.cfssl.org/
+* ETCD: https://github.com/coreos/etcd/releases
 
 ## Images list
 * calico/node:v2.6.5

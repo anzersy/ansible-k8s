@@ -1,23 +1,24 @@
 # ansible node
 [ansible]
-192.168.11.137
+192.168.14.128
 
 # etcd nodes
 [etcd]
-192.168.11.138 NODE_NAME="etcd1" NODE_IP="192.168.11.138"
-192.168.11.139 NODE_NAME="etcd2" NODE_IP="192.168.11.139"
-192.168.11.140 NODE_NAME="etcd3" NODE_IP="192.168.11.140"
+10.16.147.104 NODE_NAME="etcd1" NODE_IP="10.16.147.104"
+10.16.147.105 NODE_NAME="etcd2" NODE_IP="10.16.147.105"
+10.16.147.106 NODE_NAME="etcd3" NODE_IP="10.16.147.106"
 
 # kube-master nodes
 [kube-master]
-192.168.11.138 NODE_IP="192.168.11.138"
-192.168.11.139 NODE_IP="192.168.11.139"
-192.168.11.140 NODE_IP="192.168.11.140"
+10.16.147.104 NODE_IP="10.16.147.104"
+10.16.147.105 NODE_IP="10.16.147.105"
+10.16.147.106 NODE_IP="10.16.147.106"
 
 #kube-node nodes
 [kube-node]
-192.168.11.141 NODE_ID="node1" NODE_IP="192.168.11.141"
-192.168.11.142 NODE_ID="node2" NODE_IP="192.168.11.142"
+10.16.147.107 NODE_ID="node4" NODE_IP="10.16.147.107"
+10.16.147.108 NODE_ID="node5" NODE_IP="10.16.147.108"
+10.16.147.110 NODE_ID="node7" NODE_IP="10.16.147.110"
 
 # kube-cluster nodes
 [kube-cluster:children]
@@ -45,17 +46,17 @@ CLUSTER_KUBERNETES_SVC_IP="10.68.0.1"
 CLUSTER_DNS_SVC_IP="10.68.0.2"
 
 # Identify the ETCD_NODES and ETCD_ENDPOINTS variables that would be set to etcd server and clients' configuration
-ETCD_NODES="etcd1=https://192.168.11.138:2380,etcd2=https://192.168.11.139:2380,etcd3=https://192.168.11.140:2380"
-ETCD_ENDPOINTS="https://192.168.11.138:2379,https://192.168.11.139:2379,https://192.168.11.140:2379"
+ETCD_NODES="etcd1=https://10.16.147.104:2380,etcd2=https://10.16.147.105:2380,etcd3=https://10.16.147.106:2380"
+ETCD_ENDPOINTS="https://10.16.147.104:2379,https://10.16.147.105:2379,https://10.16.147.106:2379"
 
 # Identify the KUBE_APISERVER varible
-KUBE_APISERVER="https://192.168.11.138:6443"
+KUBE_APISERVER="https://10.16.147.104:6443"
 
 # Identify the CLUSTER_DNS_DOMAIN variable
 CLUSTER_DNS_DOMAIN="cluster.local."
 
 # Identify the POD_INFRA_CONTAINER_IMAGE variable
-POD_INFRA_CONTAINER_IMAGE="anzersy/pause-amd64:3.0"
+POD_INFRA_CONTAINER_IMAGE="10.16.147.110/anzersy/pause-amd64:3.0"
 
 # Identify the CALICO_IPV4POOL_IPIP varible
 CALICO_IPV4POOL_IPIP="always"
@@ -69,4 +70,4 @@ CA_DIR="/etc/kubernetes/ssl"
 BASE_DIR="/root/ansible-k8s"
 
 # Identify the docker daemon's configuration items
-REGISTRY_MIRROR="https://7bezldxe.mirror.aliyuncs.com"
+insecure-registries="2.3.255.240:80"
